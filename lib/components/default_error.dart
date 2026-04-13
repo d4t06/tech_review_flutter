@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class DefaultError extends StatelessWidget {
-   VoidCallback? onpress;
-   String? content;
+  final VoidCallback? onpress;
+  final String? content;
 
   const DefaultError({this.onpress, this.content});
 

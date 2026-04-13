@@ -1,4 +1,5 @@
-import 'package:tech_review/models/product_list.dart';
+
+import 'package:tech_review/models/product_list/product_list.dart';
 
 class MockProduct {
   static Future<List<ProductList>> fetchAll() async {

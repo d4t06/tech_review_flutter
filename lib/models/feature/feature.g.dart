@@ -1,0 +1,19 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'feature.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_Feature _$FeatureFromJson(Map<String, dynamic> json) => _Feature(
+  id: (json['id'] as num).toInt(),
+  productId: (json['product_id'] as num).toInt(),
+  value: json['value'] as String,
+);
+
+Map<String, dynamic> _$FeatureToJson(_Feature instance) => <String, dynamic>{
+  'id': instance.id,
+  'product_id': instance.productId,
+  'value': instance.value,
+};

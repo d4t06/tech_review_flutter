@@ -5,14 +5,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   AppThemes._();
 
-  static final _textTheme = TextTheme(
-    displayLarge: AppTextStyles.display30,
-    headlineMedium: AppTextStyles.headline24,
-    titleLarge: AppTextStyles.title20,
-    titleMedium: AppTextStyles.title18,
-    bodyLarge: AppTextStyles.body16,
-    bodyMedium: AppTextStyles.caption14,
-  );
+  static final _textTheme = TextTheme(bodyMedium: AppTextStyles.bodyMedium);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -22,10 +15,6 @@ class AppThemes {
         primary: AppColors.primary,
         secondary: AppColors.secondary,
       ),
-      // appBarTheme: const AppBarTheme(
-      //   backgroundColor: AppColors.primary,
-      //   elevation: 0,
-      // ),
       textTheme: _textTheme,
     );
   }
