@@ -6,35 +6,37 @@ import 'package:tech_review/screens/login/presentation/login_screen.dart';
 import 'package:tech_review/screens/product_detail/presentation/product_detail_screen.dart';
 import 'package:tech_review/screens/profile/presentation/profile_screen.dart';
 import 'package:tech_review/screens/root.dart';
-import 'package:tech_review/screens/splash.dart';
+import 'package:tech_review/screens/scroll_effect/scroll_effect.dart';
+import 'package:tech_review/screens/splash/splash.dart';
 
 enum AppRoute { login, root, home, splash, profile, productDetail }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
-    initialLocation: '/splash',
-    redirect: (context, state) {
-      final isSplash = state.matchedLocation == '/splash';
-      final isLogin = state.matchedLocation == '/login';
+    initialLocation: '/home',
+    // redirect: (context, state) {
+    //   final isSplash = state.matchedLocation == '/splash';
+    //   final isLogin = state.matchedLocation == '/login';
 
-      final authState = ref.read(authProvider);
+    //   final authState = ref.read(authProvider);
 
-      // 1. If are still initializing, stay on Splash
-      if (authState.isLoading) return '/splash';
+    //   // 1. If are still initializing, stay on Splash
+    //   if (authState.isLoading) return '/splash';
 
-      // 2. If finished and unauthenticated, go to Login
-      if (authState.user == null && state.matchedLocation != '/login') {
-        return '/login';
-      }
+    //   // 2. If finished and unauthenticated, go to Login
+    //   if (authState.user == null && state.matchedLocation != '/login') {
+    //     return '/login';
+    //   }
 
-      // 3. If authenticated and on Splash or Login, go Home
-      if (authState.user != null && (isSplash || isLogin)) {
-        return '/root';
-      }
+    //   // 3. If authenticated and on Splash or Login, go Home
+    //   if (authState.user != null && (isSplash || isLogin)) {
+    //     return '/root';
+    //   }
 
-      return null;
-    },
+    //   return null;
+    // },
     routes: [
+      GoRoute(path: '/test', builder: (context, state) => ScrollEffect()),
       GoRoute(
         path: '/splash',
 
@@ -77,7 +79,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 
-  ref.listen(authProvider, (_, __) => router.refresh());
+  ref.listen(authProvider, (_, _) => router.refresh());
 
   return router;
 });

@@ -5,8 +5,8 @@ import 'package:tech_review/providers/dio/auth_interceptor.dart';
 part 'dio_provider.g.dart';
 
 final dioOptions = BaseOptions(
-  // baseUrl: 'https://nest-mobile.onrender.com/api',
-  baseUrl: 'http://localhost:4000/api',
+  baseUrl: 'https://nest-mobile.onrender.com/api',
+  // baseUrl: 'http://localhost:4000/api',
   connectTimeout: Duration(seconds: 8),
   receiveTimeout: Duration(seconds: 8),
   headers: {'Content-Type': 'application/json'},

@@ -1,14 +1,12 @@
-// import 'package:dio/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tech_review/components/default_app_bar.dart';
 import 'package:tech_review/models/product_detail/product_detail.dart';
 import 'package:tech_review/providers/dio/dio_provider.dart';
 import 'package:tech_review/screens/product_detail/logic/product_detail_controller.dart';
-// import 'package:tech_review/components/default_error.dart';
-// import 'package:tech_review/mocks/mock_brand.dart';
-// import 'package:tech_review/styles.dart';
+import 'package:tech_review/styles/theme.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final String id;
@@ -25,7 +23,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   bool isLoading = true;
   String errorMsg = '';
-  ProductDetail? productDetail = null;
+  ProductDetail? productDetail;
 
   @override
   void initState() {
@@ -53,18 +51,21 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   Widget _root() {
-    if (this.isLoading) {
+    if (isLoading) {
       return Center(child: CircularProgressIndicator());
     } else {
       return RefreshIndicator(
         onRefresh: () => ProductDetailController.fetchProduct(id, dio),
-        child: this.errorMsg.isNotEmpty
+        child: errorMsg.isNotEmpty
             ? Center(child: Text("Error"))
             : productDetail != null
-            ? SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: _body(),
+            ? Padding(
+                padding: EdgeInsets.all(context.spacing.s3),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _body(),
+                  ),
                 ),
               )
             : Center(child: Text("Error")),
@@ -73,46 +74,63 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   List<Widget> _body() {
-    final result = <Widget>[];
+    return [
+      SizedBox(height: context.spacing.s8),
+      _renderImage(),
+      SizedBox(height: context.spacing.s3),
+      Center(
+        child: Text(
+          productDetail!.productName,
+          style: context.text.textXl.bold,
+        ),
+      ),
 
-    // result.add(_renderImage());
-    result.add(Center(child: Text(productDetail!.productName)));
-    result.add(_renderTitle("Spec"));
-    result.addAll(_renderSpec());
-    result.add(_renderTitle("Detail"));
-    // result.add(_renderDetail());
-
-    return result;
+      SizedBox(height: context.spacing.s8),
+      Image.asset('assets/images/icons/gear.png', width: 28),
+      SizedBox(height: context.spacing.s3),
+      _renderSpec(),
+      SizedBox(height: context.spacing.s8),
+      Image.asset('assets/images/icons/note.png', width: 28),
+      SizedBox(height: context.spacing.s3),
+      _renderDetail(),
+    ];
   }
 
-  Widget _renderTitle(String title) {
-    return Container(
-      padding: EdgeInsets.only(left: 15, bottom: 10, top: 15),
-      child: Text(title),
+  Widget _renderImage() {
+    return Center(
+      child: ClipRRect(
+        borderRadius: context.radius.all(context.radius.md),
+        child: Container(
+          color: Colors.black.withAlpha(10),
+          height: 200,
+          width: 200,
+          child: Image.asset(
+            'assets/images/icons/laptop.png',
+            alignment: Alignment.center,
+          ),
+        ),
+      ),
     );
   }
 
-  // Widget _renderImage() {
-  //   final brand = MockBrand.getBrandById(this.product.brand_id);
+  Widget _renderSpec() {
+    return Container(
+      padding: EdgeInsets.all(context.spacing.s3),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.black.withAlpha(10),
+        borderRadius: context.radius.all(context.radius.md),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: productDetail!.attributes
+            .map((att) => Text(att.value))
+            .toList(),
+      ),
+    );
+  }
 
-  //   return Container(
-  //     height: 200,
-  //     child: Center(
-  //       child: Image.network(brand.image_url, fit: BoxFit.fitHeight),
-  //     ),
-  //   );
-  // }
-
-  List<Widget> _renderSpec() {
-    if (productDetail == null) return [];
-
-    return productDetail!.attributes
-        .map(
-          (att) => Container(
-            padding: EdgeInsets.only(left: 15, bottom: 5),
-            child: Text(att.value),
-          ),
-        )
-        .toList();
+  Widget _renderDetail() {
+    return Html(data: productDetail?.description.content ?? "");
   }
 }

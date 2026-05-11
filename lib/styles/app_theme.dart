@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:tech_review/styles/app_colors.dart';
+import 'package:tech_review/styles/app_text_styles.dart';
+
+class AppTheme {
+  const AppTheme._();
+
+  static ColorScheme _colorScheme(Brightness brightness) {
+    AppColors colors = AppColors();
+
+    return ColorScheme(
+      brightness: brightness,
+      primary: colors.primary,
+      onPrimary: AppColors.onPrimary,
+      secondary: colors.primary,
+      onSecondary: AppColors.onPrimary,
+      error: Colors.red,
+      onError: Colors.white,
+      surface:
+          brightness == Brightness.light
+              ? AppColors.lightSurface
+              : AppColors.darkSurface,
+      onSurface:
+          brightness == Brightness.light
+              ? AppColors.lightOnSurface
+              : AppColors.darkOnSurface,
+    );
+  }
+
+  static dynamic _elementTypes(ColorScheme colorScheme) {
+    return (
+      appBarTheme: AppBarTheme(
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        centerTitle: false,
+      ),
+
+      dividerColor: colorScheme.outline,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(colorScheme.primary),
+          foregroundColor: WidgetStateProperty.all(colorScheme.onPrimary),
+        ),
+      ),
+    );
+  }
+
+  static ThemeData get lightTheme {
+    final colorSchemes = _colorScheme(Brightness.light);
+    final lightElementThemes = _elementTypes(colorSchemes);
+
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: "ShantellSans",
+      scaffoldBackgroundColor: colorSchemes.surface,
+      textTheme: const TextTheme(bodyMedium: AppTextStyles.textBase),
+      colorScheme: colorSchemes,
+      appBarTheme: lightElementThemes.appBarTheme,
+      dividerColor: lightElementThemes.dividerColor,
+      elevatedButtonTheme: lightElementThemes.elevatedButtonTheme,
+    );
+  }
+}

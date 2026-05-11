@@ -21,7 +21,7 @@ class AppAsyncValueView<T> extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Error"),
+            Text("$error"),
             const SizedBox(height: 12),
             if (onRetry != null)
               OutlinedButton(onPressed: onRetry, child: Text("Retry")),

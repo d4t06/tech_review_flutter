@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tech_review/providers/auth/auth_provider.dart';
+
+@riverpod
+Future<void> _init(Ref ref) async {
+  return ref.read(authProvider.notifier).init();
+}
+
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});

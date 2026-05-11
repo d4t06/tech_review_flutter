@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
-class DefaultAppBar extends AppBar {
-  @override
-  final Widget title =
-      Text("Tech Preview".toUpperCase());
+class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const DefaultAppBar({this.title = 'as', this.actions, super.key});
+
+  final String title;
+  final List<Widget>? actions;
 
   @override
-  final bool centerTitle = true;
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+      actions: actions,
+      // bottom: PreferredSize(
+      //   preferredSize: const Size.fromHeight(2),
+      //   child: Container(height: 2, color: Theme.of(context).colorScheme.secondary),
+      // ),
+    );
+  }
 
   @override
-  final double elevation = 0.5;
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 2);
 }

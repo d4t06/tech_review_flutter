@@ -18,7 +18,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -49,17 +48,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Login",
-                        textAlign: TextAlign.center,
-                        style: Styles.headerLarge,
-                      ),
+                      Text("Login", textAlign: TextAlign.center),
 
                       if (ref.watch(loginProvider).errorMessage != null)
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            ref.watch(loginProvider)
+                            ref
+                                .watch(loginProvider)
                                 .errorMessage!, // Use ! because we checked for null
                             style: const TextStyle(color: Colors.red),
                           ),
@@ -67,7 +63,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                       SizedBox(height: 30),
 
-                      Text("Username", style: Styles.textDefault),
+                      Text("Username"),
                       SizedBox(height: 5),
 
                       _textInput(_userController),
@@ -98,7 +94,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             }
                           },
                           child: Text(
-                            ref.watch(loginProvider).isFetching ? "Loading" : "Login",
+                            ref.watch(loginProvider).isFetching
+                                ? "Loading"
+                                : "Login",
                           ),
                         ),
                       ),
